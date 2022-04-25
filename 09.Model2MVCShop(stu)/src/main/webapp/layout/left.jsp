@@ -48,6 +48,17 @@
 				//alert(  $( ".Depth03:contains('판매상품등록')" ) );
 		 		$(window.parent.frames["rightFrame"].document.location).attr("href","../product/addProductView.jsp");
 			}); 
+		 	
+		 	$( ".Depth03:contains('판매상품관리')" ).on("click" , function() {
+				//Debug..
+				//alert(  $( ".Depth03:contains('판매상품관리')" ) );
+		 		$(window.parent.frames["rightFrame"].document.location).attr("href","/product/listProduct?menu=manage");
+			}); 
+		 	$( ".Depth03:contains('상 품 검 색')" ).on("click" , function() {
+				//Debug..
+				//alert(  $( ".Depth03:contains('상 품 검 색')" ) );
+		 		$(window.parent.frames["rightFrame"].document.location).attr("href","/product/listProduct?menu=search");
+			}); 
 			
 		});	
 		 

@@ -104,19 +104,19 @@ System.out.println("menu : "+menu);			//menu°ª È®ÀÎ
 	@RequestMapping(value="updateProduct", method = RequestMethod.POST)
 	public String updateProduct(@ModelAttribute("product")Product product, Model model) throws Exception{
 		
-		System.out.println("/updateProduct");
+		System.out.println("/updateProduct : POST");
 	
 		productService.updateProduct(product);
 				
 		model.addAttribute("product", product);
 		
-		return "redirect:/getProduct?menu=manage&prodNo="+product.getProdNo();
+		return "redirect:/product/getProduct?menu=manage&prodNo="+product.getProdNo();
 	}
 	
 	@RequestMapping(value="updateProduct", method = RequestMethod.GET)
 	public String updateProduct(@RequestParam("prodNo")int prodNo, Model model) throws Exception{
 		
-		System.out.println("/updateProductView");
+		System.out.println("/updateProductView : GET");
 		
 		Product product = productService.getProduct(prodNo);
 		

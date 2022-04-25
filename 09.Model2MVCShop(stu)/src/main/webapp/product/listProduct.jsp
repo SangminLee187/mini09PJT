@@ -28,25 +28,42 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript">
-// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();		
-}
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+	function fncGetList(currentPage) {
+		//document.getElementById("currentPage").value = currentPage;
+		$("#currentPage").val(currentPage)
+	   	//document.detailForm.submit();
+		$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+	}
+	$(function() {
+			//==> 검색 Event 연결처리부분
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
+			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
+				//Debug..
+				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+				fncGetList(1);
+			});
+			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+					//Debug..
+					//alert(  $( this ).text().trim() );
+					self.location ="/product/getProduct?prodNo="+$(".prodNo")+"&menu=${param.menu}";
+			});
+			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "blue");
 
-</script>
+	});	
+	</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
 <div style="width:98%; margin-left:10px;">
 
-
+<!--
 <form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post">
+-->
 
-
-<input type="hidden" name="prodNo" value="${product.prodNo}"/>
 
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
@@ -99,7 +116,9 @@ function fncGetList(currentPage) {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+						<!-- 
 						<a href="javascript:fncGetList('1');">검색</a>
+						 -->검색
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -163,7 +182,7 @@ function fncGetList(currentPage) {
 	--%>	
 	
 		<c:set var="i" value="0" />
-	<c:forEach var="product" items="${list}">
+	<c:forEach var="product" test="" items="${list}">
 		<c:set var="i" value="${ i+1 }" />
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
@@ -173,8 +192,12 @@ function fncGetList(currentPage) {
 					${product.prodName}
 				</c:if>
 				<c:if test="${empty product.proTranCode }">
+					<input type="hidden" name="prodNo" class= "prodNo" value="${product.prodNo}"/>
+					<!-- 
 					<a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
+					 -->${product.prodName}
 				</c:if>
+				</td>
 			<td></td>			
 		<td align="left">${product.price}</td>
 			<td></td>
