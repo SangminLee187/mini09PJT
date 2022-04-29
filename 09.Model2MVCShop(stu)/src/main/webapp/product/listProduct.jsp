@@ -48,7 +48,7 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
 					//Debug..
 					//alert(  $( this ).text().trim() );
-					self.location ="/product/getProduct?prodNo="+$(".prodNo")+"&menu=${param.menu}";
+					self.location ="/product/getProduct?prodNo="+$("input[type='hidden']").val()+"&menu=${param.menu}";
 			});
 			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "blue");
 
@@ -182,7 +182,7 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 	--%>	
 	
 		<c:set var="i" value="0" />
-	<c:forEach var="product" test="" items="${list}">
+	<c:forEach var="product" items="${list}">
 		<c:set var="i" value="${ i+1 }" />
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
@@ -192,12 +192,12 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 					${product.prodName}
 				</c:if>
 				<c:if test="${empty product.proTranCode }">
-					<input type="hidden" name="prodNo" class= "prodNo" value="${product.prodNo}"/>
 					<!-- 
 					<a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 					 -->${product.prodName}
 				</c:if>
 				</td>
+				<input type="hidden" value="${product.prodNo}"/>
 			<td></td>			
 		<td align="left">${product.price}</td>
 			<td></td>
